@@ -301,9 +301,12 @@ source $keystone_admin_rc_file
 domaindefaultid=`openstack domain show default -f value -c id`
 crudini --set /etc/cinder/cinder.conf keystone_authtoken project_domain_id $domaindefaultid
 crudini --set /etc/cinder/cinder.conf keystone_authtoken user_domain_id $domaindefaultid
-crudini --set /etc/cinder/cinder.conf DEFAULT os_privileged_user_name $cinderuser
-crudini --set /etc/cinder/cinder.conf DEFAULT os_privileged_user_password $cinderpass
-crudini --set /etc/cinder/cinder.conf DEFAULT os_privileged_user_auth_url "http://$keystonehost:5000/v2.0/"
+# crudini --set /etc/cinder/cinder.conf DEFAULT os_privileged_user_name $cinderuser
+# crudini --set /etc/cinder/cinder.conf DEFAULT os_privileged_user_password $cinderpass
+# crudini --set /etc/cinder/cinder.conf DEFAULT os_privileged_user_auth_url "http://$keystonehost:5000/v2.0/"
+crudini --del /etc/cinder/cinder.conf DEFAULT os_privileged_user_name
+crudini --del /etc/cinder/cinder.conf DEFAULT os_privileged_user_password
+crudini --del /etc/cinder/cinder.conf DEFAULT os_privileged_user_auth_url
 crudini --set /etc/cinder/cinder.conf DEFAULT nova_catalog_info "compute:nova:internalURL"
 crudini --set /etc/cinder/cinder.conf DEFAULT nova_catalog_admin_info "compute:nova:adminURL"
 crudini --set /etc/cinder/cinder.conf DEFAULT os_region_name $endpointsregion
