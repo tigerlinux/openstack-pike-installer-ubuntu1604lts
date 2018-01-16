@@ -84,7 +84,7 @@ case $1 in
 	echo "- OS: Ubuntu Server 16.04 LTS x86_64 fully updated"
 	echo "- This script must be executed by root account (don't use sudo please)"
 	echo "- All ubuntu original repositories must be enabled and available"
-	echo "- Ubuntu Cloud Archive OCATA repository must be enabled and available"
+	echo "- Ubuntu Cloud Archive PIKE repository must be enabled and available"
 	echo "- OpenVSwitch must be installed and configured with at least br-int bridge"
 	echo "- If you wish to install swift, the filesystem should be mounted in /srv/node"
 	echo ""
