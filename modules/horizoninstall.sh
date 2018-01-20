@@ -174,6 +174,11 @@ else
         sed -r -i "s/VPNAAS_INSTALL_BOOL/False/" /etc/openstack-dashboard/local_settings.py
 fi
 
+if [ $disableconsole == "yes" ]
+then
+	sed -r -i 's/^\#CONSOLE_TYPE.*/CONSOLE_TYPE\ =\ None/g' /etc/openstack-dashboard/local_settings.py
+fi
+
 sync
 sleep 5
 sync
@@ -300,6 +305,27 @@ systemctl restart memcached
 
 systemctl restart apache2
 
+# Grafana installation is next:
+
+if [ $grafanainstall == "yes" ]
+then
+	wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_4.6.3_amd64.deb -O /root/grafana_4.6.3_amd64.deb
+	dpkg -i /root/grafana_4.6.3_amd64.deb
+	sync
+	rm -f /root/grafana_4.6.3_amd64.deb
+        systemctl stop grafana-server
+        systemctl enable grafana-server
+
+        crudini --set /etc/grafana/grafana.ini server http_addr $horizonhost
+        crudini --set /etc/grafana/grafana.ini server http_port 3000
+        crudini --set /etc/grafana/grafana.ini security admin_user admin
+        crudini --set /etc/grafana/grafana.ini security admin_password $grafanapass
+        grafana-cli plugins install gnocchixyz-gnocchi-datasource
+        grafana-cli plugins install gnocchixyz-gnocchi-datasource
+
+        systemctl restart grafana-server
+fi
+
 #
 # And finally, we ensure our packages are correctly installed, if not, we fail and stop
 # further procedures.
@@ -321,6 +347,3 @@ echo "Ready"
 echo ""
 echo "Horizon Dashboard Installed"
 echo ""
-
-
-

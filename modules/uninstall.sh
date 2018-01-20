@@ -163,6 +163,8 @@ DEBIAN_FRONTEND=noninteractive aptitude -y purge dnsmasq-base lxd
 
 DEBIAN_FRONTEND=noninteractive aptitude -y purge strongswan strongswan-ikev2 python-neutron-vpnaas
 
+DEBIAN_FRONTEND=noninteractive aptitude -y purge grafana
+
 killall -9 dnsmasq > /dev/null 2>&1
 killall -9 libvirtd > /dev/null 2>&1
 
@@ -288,6 +290,9 @@ rm -fr  /etc/qpid \
         /var/log/magnum \
         /var/lib/magnum \
         /etc/magnum \
+	/etc/grafana \
+	/var/log/grafana \
+	/var/lib/grafana \
 	/etc/apache2/sites-enabled/wsgi-ceilometer.conf \
 	/etc/apache2/sites-enabled/wsgi-aodh.conf \
 	/etc/apache2/sites-available/wsgi-aodh.conf \
